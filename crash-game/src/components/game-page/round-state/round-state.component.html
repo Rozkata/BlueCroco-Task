@@ -1,0 +1,18 @@
+<!-- WAITING FOR THE NEXT ROUND -->
+<div class="round-state-wrapper flex align-items-center justify-content-center">
+  @if (
+    gameState()?.currentAction === ERoundLifecycleState.RoundCreated ||
+    gameState()?.currentAction === ERoundLifecycleState.RoundFinished
+  ) {
+    <p>{{ "Waiting for the next round" | uppercase }}</p>
+  } @else if (
+    gameState()?.currentAction === ERoundLifecycleState.RoundRunning
+  ) {
+    <div
+      class="multiplier"
+      [style.background-color]="gameState()?.multiplier | multiplierColor"
+    >
+      {{ gameState()?.multiplier }}
+    </div>
+  }
+</div>

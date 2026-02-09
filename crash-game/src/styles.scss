@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+@import url(./shared/styles/globals.scss);
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-image: url("../public/bluecroco-bg.jpg");
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}

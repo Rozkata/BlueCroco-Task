@@ -1,0 +1,9 @@
+<div class="flex flex-column w-100 h-100 game-page-wrapper align-items-center">
+  @defer (when !!gameState()) {
+    <app-round-state [gameState]="gameState()"></app-round-state>
+  } @placeholder {
+    <div class="placeholder-wrapper">
+      <p>{{ "Initializing game" | uppercase }}</p>
+    </div>
+  }
+</div>
