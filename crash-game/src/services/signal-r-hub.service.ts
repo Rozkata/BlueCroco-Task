@@ -1,9 +1,8 @@
 import { Injectable, signal } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import {
-  ERoundLifecycleState,
   IActiveRoundState,
-  IGameBetState,
+  IGameBetStateTransactionData,
 } from '../models/game-states.model';
 import { environment } from '../environments/environment';
 import { ConnectionState } from '../models/connection-state.type';
@@ -16,6 +15,12 @@ export class SignalRHubService {
 
   readonly connectionState = signal<ConnectionState>('disconnected');
   readonly roundState = signal<IActiveRoundState | undefined>(undefined);
+  readonly debitState = signal<IGameBetStateTransactionData | undefined>(
+    undefined,
+  );
+  readonly creditState = signal<IGameBetStateTransactionData | undefined>(
+    undefined,
+  );
 
   constructor() {}
 
@@ -30,6 +35,8 @@ export class SignalRHubService {
     this.startConnection();
     this.handleStates();
     this.handleRoundUpdate();
+    this.handleDebitResult();
+    this.handleCreditResult();
   }
 
   private startConnection(): void {
@@ -56,5 +63,26 @@ export class SignalRHubService {
     this.connection?.on('roundUpdate', (state: IActiveRoundState) => {
       this.roundState.set(state);
     });
+  }
+
+  private handleDebitResult(): void {
+    this.connection?.on(
+      'debitResult',
+      (state: IGameBetStateTransactionData) => {
+        console.log('debitResult ', state);
+        this.debitState.set(state);
+      },
+    );
+  }
+
+  private handleCreditResult(): void {
+    this.connection?.on(
+      'creditResult',
+      (state: IGameBetStateTransactionData) => {
+        console.log('creditResult 2', state);
+
+        this.creditState.set(state);
+      },
+    );
   }
 }

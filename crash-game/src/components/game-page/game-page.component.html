@@ -1,6 +1,14 @@
 <div class="flex flex-column w-100 h-100 game-page-wrapper align-items-center">
   @defer (when !!gameState()) {
-    <app-round-state [gameState]="gameState()"></app-round-state>
+    <div class="flex align-items-center">
+      <app-round-state [gameState]="gameState()"></app-round-state>
+    </div>
+
+    <app-bet
+      class="mt-20"
+      [roundState]="roundState()"
+      (betPlaced)="handleBetPlaced($event)"
+    ></app-bet>
   } @placeholder {
     <div class="placeholder-wrapper">
       <p>{{ "Initializing game" | uppercase }}</p>

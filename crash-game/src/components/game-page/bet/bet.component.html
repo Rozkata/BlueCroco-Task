@@ -1,0 +1,11 @@
+@if (
+  roundState()?.gameState?.currentAction === ERoundLifecycleState.RoundCreated
+) {
+  <button class="bet-btn" (click)="handlePlaceBet()">Place Bet</button>
+} @else if (
+  roundState()?.gameState?.currentAction ===
+    ERoundLifecycleState.RoundRunning ||
+  roundState()?.gameState?.currentAction === ERoundLifecycleState.RoundRecovered
+) {
+  <button class="bet-btn">Cashout</button>
+}
