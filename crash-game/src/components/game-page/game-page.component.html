@@ -1,13 +1,23 @@
 <div class="flex flex-column w-100 h-100 game-page-wrapper align-items-center">
   @defer (when !!gameState()) {
-    <div class="flex align-items-center">
+    <div class="flex flex-column align-items-center">
       <app-round-state [gameState]="gameState()"></app-round-state>
+
+      <div
+        class="flex flex-column align-items-center justify-content-center mt-20"
+      >
+        <p class="balance-label">Balance</p>
+
+        <p class="mt-10 balance">{{ debitState()?.balance ?? 0 }}</p>
+      </div>
     </div>
 
     <app-bet
       class="mt-20"
       [roundState]="roundState()"
-      (betPlaced)="handleBetPlaced($event)"
+      [debitState]="debitState()"
+      (placedBet)="handlePlacedBet($event)"
+      (closeBet)="handleCloseBet($event)"
     ></app-bet>
   } @placeholder {
     <div class="placeholder-wrapper">

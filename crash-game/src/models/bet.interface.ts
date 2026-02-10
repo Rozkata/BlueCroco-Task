@@ -6,3 +6,9 @@ export interface PlacedBet {
   betIndex: number;
   autoCashoutMultiplier: number | undefined;
 }
+
+export interface CashoutBet {
+  betReferenceId: string;
+  partialCashout: boolean;
+  sequence: number;
+}

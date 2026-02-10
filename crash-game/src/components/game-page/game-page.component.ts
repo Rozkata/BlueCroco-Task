@@ -9,7 +9,7 @@ import {
 } from '../../models/game-states.model';
 import { ConnectionState } from '../../models/connection-state.type';
 import { BetComponent } from './bet/bet.component';
-import { PlacedBet } from '../../models/bet.interface';
+import { CashoutBet, PlacedBet } from '../../models/bet.interface';
 import { BluecrocoApiService } from '../../services/bluecroco-api.service';
 
 @Component({
@@ -37,21 +37,28 @@ export class GamePageComponent {
     IGameBetStateTransactionData | undefined
   > = this.signalRHubService.debitState;
 
-  protected readonly creditState: Signal<
-    IGameBetStateTransactionData | undefined
-  > = this.signalRHubService.creditState;
-
   constructor() {
     this.signalRHubService.initializeConnection();
   }
 
-  handleBetPlaced(bet: PlacedBet): void {
+  handlePlacedBet(bet: PlacedBet): void {
     this.blueCrocoApiService.placeBet(bet).subscribe({
       next: () => {
         console.log('Bet placed successfully');
       },
       error: (error) => {
         console.log('Error placing bet:', error);
+      },
+    });
+  }
+
+  handleCloseBet(bet: CashoutBet): void {
+    this.blueCrocoApiService.cashoutBet(bet).subscribe({
+      next: () => {
+        console.log('Bet cashed out successfully');
+      },
+      error: (error) => {
+        console.log('Error cashing out bet:', error);
       },
     });
   }

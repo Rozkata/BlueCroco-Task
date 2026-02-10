@@ -18,9 +18,6 @@ export class SignalRHubService {
   readonly debitState = signal<IGameBetStateTransactionData | undefined>(
     undefined,
   );
-  readonly creditState = signal<IGameBetStateTransactionData | undefined>(
-    undefined,
-  );
 
   constructor() {}
 
@@ -69,7 +66,6 @@ export class SignalRHubService {
     this.connection?.on(
       'debitResult',
       (state: IGameBetStateTransactionData) => {
-        console.log('debitResult ', state);
         this.debitState.set(state);
       },
     );
@@ -79,9 +75,7 @@ export class SignalRHubService {
     this.connection?.on(
       'creditResult',
       (state: IGameBetStateTransactionData) => {
-        console.log('creditResult 2', state);
-
-        this.creditState.set(state);
+        this.debitState.set(state);
       },
     );
   }
